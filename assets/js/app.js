@@ -5,12 +5,16 @@ const $b = document.querySelector('.blog');
 const $l = document.querySelector('.location'); // agregar un elemento con la clase location
 
 async function displayUser(username) { // en esta linea se agrega la expresion para tener una promesa
-  $n.textContent = 'cargando...';
-  const response = await fetch(`${usersEndpoint}/${username}`); // la expresion await solo es permitida en funciones async
-  console.log(data);
-  $n.textContent = '${data.name}';
-  $b.textContent = '${data.blog}';
-  $l.textContent = '${data.location}';
+try {
+    const response = await fetch(`${usersEndpoint}/${username}`);
+    const data = await response.json();
+
+    $n.textContent = `${data.name}`;
+    $b.textContent = `${data.blog}`;
+    $l.textContent = `${data.location}`;
+  } catch (err) {
+    handleError(err);
+  }
 }
 
 function handleError(err) {
